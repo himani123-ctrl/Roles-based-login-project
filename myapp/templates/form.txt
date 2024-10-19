@@ -1,0 +1,314 @@
+<form method="post" action="{% url 'form_view' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% comment %} <div class="form-group"> {% endcomment %}
+        {% comment %} {{ form_data.as_p }} {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+    <div class="form-group ">
+      
+        {% comment %} <div class="form-group">
+            <h1 style="margin-right:20px;">TAX INVOICE</h1>
+            <input type="file" name="logo" class="form-control" />Upload logo
+        </div> {% endcomment %}
+        <div class="form-group" style="display: flex; align-items: center;">
+           
+    <!-- File input --> 
+    {% comment %} <span>Upload logo</span> {% endcomment %}
+    {% comment %} <span class="upload-icon">📁</span> {% endcomment %}
+    {% comment %} <input type="file" name="logo" class="upload-input"> {% endcomment %}
+    <!-- Upload label -->
+
+
+    {% comment %} trial {% endcomment %}
+    <div class="upload-container" >
+        <i class="fas fa-cloud-upload-alt upload-icon"></i> 
+        
+        <span class="upload-text">Upload</span>
+        <input type="file" name="logo" id="logo-upload" accept="image/*" onchange="displayImage(event)">              
+        <img id="logo-preview" src="#" alt=""> 
+    </div>
+
+    <h1 style="margin: 0; white-space: nowrap; margin-left:350px;">TAX INVOICE</h1> 
+            {% comment %} <input type="file" name="logo" style="margin-right: 5px;" / >Upload logo
+            <h1 style="margin: 0; white-space: nowrap; margin-left:350px;">TAX INVOICE</h1> {% endcomment %}
+        </div>
+        <br>
+        <!-- Company -->
+        <div class="form-group" style="margin:0;">
+            <input type="text" name="company" class="form-control" placeholder=" Company Name" value="{{ form_data.company.value|default_if_none:'' }}"  style="width: 23.5%; height: 25px; margin-bottom: 0.15rem; border: 0.5px solid transparent;margin-left:7px;"/>
+        </div>
+        <!-- Your Name -->
+        <div class="form-group" style="margin:0;" >
+            <input type="text" name="your_name" class="form-control" placeholder=" Your Name" value="{{ form_data.your_name.value|default_if_none:'' }}" style="width:23.5%; height: 25px; margin-bottom: 0.15rem; border: 0.5px solid transparent; margin-left:7px;" />
+        </div>
+        <!-- Company GSTIN -->
+        <div class="form-group" style="margin:0;">
+            <input type="text" name="company_gstin" class="form-control" placeholder=" Company GSTIN" value="{{ form_data.company_gstin.value|default_if_none:'' }}" style="width: 25.5%; height: 25px; margin-bottom: 0.15rem; border: 0.5px solid transparent;margin-left:7px;"/>
+        </div>
+        <!-- Company Address -->
+        <div class="form-group" style="margin:0;">
+            <input type="text" name="company_address" class="form-control" placeholder=" Company Address" value="{{ form_data.company_address.value|default_if_none:'' }}" style="width: 25.5%; height: 25px; margin-bottom: 0.15rem; border: 0.5px solid transparent;margin-left:7px;"/>
+        </div>
+        <!-- City -->
+        <div class="form-group" style="margin:0">
+            <!-- <input type="text" name="city" class="form-control" placeholder=" City" value="{{ form_data.city.value|default_if_none:'' }}" style="width: 23.5%; height: 21px; margin-bottom: 0.15rem; border: 0.5px solid transparent;"/> -->
+            <select name="city" class="form-control" style="width: 23.5%; border: 0.5px solid transparent;">
+                <option value="">City</option>
+                <!-- Add more options as needed -->
+                <option value="New York" {% if form_data.city.value == 'New York' %}selected{% endif %}>New York</option>
+                <option value="Los Angeles" {% if form_data.city.value == 'Los Angeles' %}selected{% endif %}>Los Angeles</option>
+            </select>   
+        </div>
+        <!-- State -->
+        <div class="form-group"style="margin:0;">
+            <!-- <input type="text" name="state" class="form-control" placeholder=" State" value="{{ form_data.state.value|default_if_none:'' }}" style=" width: 23.5%; height: 21px; margin-bottom: 0.15rem; border: 0.5px solid transparent;"/> -->
+            <select name="state" class="form-control" style="width: 23.5%; border: 0.5px solid transparent; ">
+                <option value=""> State</option>
+                <!-- Add more options as needed -->
+                <option value="California" {% if form_data.state.value == 'California' %}selected{% endif %}>California</option>
+                <option value="New York" {% if form_data.state.value == 'New York' %}selected{% endif %}>New York</option>
+            </select>
+        </div>
+        <!-- Country -->
+        <div class="form-group" style="margin:0;">
+            <!-- <input type="text" name="country" class="form-control" placeholder=" Country" value="{{ form_data.country.value|default_if_none:'' }}" style=" width: 23.5%; height: 21px; margin-bottom: 0.17rem; border: 0.5px solid transparent;"/> -->
+            <select name="country" class="form-control" style="width: 23.5%;border: 0.5px solid transparent;">
+                <option value="">Country</option>
+                <!-- Add more options as needed -->
+                <option value="USA" {% if form_data.country.value == 'USA' %}selected{% endif %}>USA</option>
+                <option value="Canada" {% if form_data.country.value == 'Canada' %}selected{% endif %}>Canada</option>
+            </select>
+        </div>
+        <br>
+        <!-- Client Company -->
+         <h6 style="margin-left:12px;">Bill To:</h6>
+         <br>
+         <div class="row">
+            <!-- First Column -->
+            <div class="col-md-6">
+                <!-- Client Company -->
+                <div class="form-group" style="margin:0;">
+                    <input type="text" name="client_company" class="form-control" placeholder="Client Company" value="{{ form_data.client_company.value|default_if_none:'' }}" style=" width: 48.5%; height: 25px; margin-bottom: 0.1rem;border: 0.5px solid transparent;margin-left:11px;"  />
+                </div>
+                <!-- Client GSTIN -->
+                <div class="form-group" style="margin:0;">
+                    <input type="text" name="client_gstin" class="form-control" placeholder="Client GSTIN" value="{{ form_data.client_gstin.value|default_if_none:'' }}" style=" width: 48.5%; height: 25px;margin-bottom: 0.1;border: 0.5px solid transparent;margin-left:11px;"/>
+                </div>
+                <!-- Client Address -->
+                <div class="form-group" style="margin:0;">
+                    <input type="text" name="client_address" class="form-control" placeholder="Client Address" value="{{ form_data.client_address.value|default_if_none:'' }}" style=" width: 48.5%; height: 25px; border: 0.5px solid transparent;margin-left:11px;"/>
+                </div>
+                <!-- Client City -->
+                <div class="form-group" style="margin:0;">
+                    <!-- <input type="text" name="client_city" class="form-control" placeholder="Client City" value="{{ form_data.client_city.value|default_if_none:'' }}"style=" width: 48.5%; height: 21px; border: 0.5px solid transparent;"/> -->
+                    <select name="client_city" class="form-control" style="width: 48.5%; border: 0.5px solid transparent;">
+                        <option value="">City</option>
+                        <!-- Add more options as needed -->
+                        <option value="Chicago" {% if form_data.client_city.value == 'Chicago' %}selected{% endif %}>Chicago</option>
+                        <option value="Houston" {% if form_data.client_city.value == 'Houston' %}selected{% endif %}>Houston</option>
+                    </select>
+                </div>
+                <!-- Client State -->
+                <div class="form-group"style="margin:0;">
+                    <!-- <input type="text" name="client_state" class="form-control" placeholder="Client Country" value="{{ form_data.client_state.value|default_if_none:'' }}" style=" width: 48.5%; height: 21px;border: 0.5px solid transparent;" /> -->
+                    <select name="client_state" class="form-control" style="width: 48.5%;border: 0.5px solid transparent;">
+                        <option value="">State</option>
+                        <!-- Add more options as needed -->
+                        <option value="Texas" {% if form_data.client_state.value == 'Texas' %}selected{% endif %}>Texas</option>
+                        <option value="Illinois" {% if form_data.client_state.value == 'Illinois' %}selected{% endif %}>Illinois</option>
+                    </select>
+                </div>
+                <!-- Client Country -->
+                <div class="form-group" style="margin:0;">
+                    <!-- <input type="text" name="client_country" class="form-control" placeholder="Place Of Supply" value="{{ form_data.client_country.value|default_if_none:'' }}" style=" width: 48.5%; height: 21px;border: 0.5px solid transparent;"/> -->
+                    <select name="client_country" class="form-control" style="width: 48.5%;border: 0.5px solid transparent;">
+                        <option value="">Country</option>
+                        <!-- Add more options as needed -->
+                        <option value="USA" {% if form_data.client_country.value == 'USA' %}selected{% endif %}>USA</option>
+                        <option value="Canada" {% if form_data.client_country.value == 'Canada' %}selected{% endif %}>Canada</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Second Column -->
+            <div class="col-md-6">
+                <!-- Invoice -->
+                <div class="form-group" style="margin:0;">
+                    <input type="text" name="invoice" class="form-control" placeholder="Invoice Details" value="{{ form_data.invoice.value|default_if_none:'' }}" style=" width: 55%; height: 21px; border: 0.5px solid transparent;" />
+                </div>
+                {% comment %} <!-- DateTime Field 1 -->
+                <div class="form-group">
+                    <input type="datetime-local" name="datetime_field1" class="form-control" value="{{ form_data.datetime_field1.value|default_if_none:'' }}" />
+                </div>
+                <!-- DateTime Field 2 -->
+                <div class="form-group">
+                    <input type="datetime-local" name="datetime_field2" class="form-control" value="{{ form_data.datetime_field2.value|default_if_none:'' }}" />
+                </div> {% endcomment %}
+                <!-- DateTime Field 1 -->
+                 
+<div class="form-group" style="margin:0;">
+<input type="datetime-local" 
+   name="datetime_field1" 
+   class="form-control" 
+   value="{{ form_data.datetime_field1|date:'Y-m-d\TH:i' }}" style=" width: 55%; height: 21px;border: 0.5px solid transparent;font-family: Arial, sans-serif; " />
+</div>  
+
+
+<!-- DateTime Field 2 -->
+<div class="form-group" style="margin:0;">
+<input type="datetime-local" 
+   name="datetime_field2" 
+   class="form-control" 
+   value="{{ form_data.datetime_field2|date:'Y-m-d\TH:i' }}" style=" width: 55%; height: 21px;border: 0.5px solid transparent;" />
+</div>
+
+            </div>
+        </div>
+        {% comment %} <div class="form-group">
+            <input type="text" name="client_company" class="form-control" placeholder=" client company" value="{{ form_data.client_company.value|default_if_none:'' }}" />
+        </div>
+        <!-- Client GSTIN -->
+        <div class="form-group">
+            <input type="text" name="client_gstin" class="form-control" placeholder=" client GSTIN" value="{{ form_data.client_gstin.value|default_if_none:'' }}" />
+        </div>
+        <!-- Client Address -->
+        <div class="form-group">
+            <input type="text" name="client_address" class="form-control" placeholder=" client address" value="{{ form_data.client_address.value|default_if_none:'' }}" />
+        </div>
+        <!-- Client City -->
+        <div class="form-group">
+            <input type="text" name="client_city" class="form-control" placeholder=" client city" value="{{ form_data.client_city.value|default_if_none:'' }}" />
+        </div>
+        <!-- Client State -->
+        <div class="form-group">
+            <input type="text" name="client_state" class="form-control" placeholder=" client state" value="{{ form_data.client_state.value|default_if_none:'' }}" />
+        </div>
+        <!-- Client Country -->
+        <div class="form-group">
+            <input type="text" name="client_country" class="form-control" placeholder=" client country" value="{{ form_data.client_country.value|default_if_none:'' }}" />
+        </div>
+        <!-- Invoice -->
+        <div class="form-group">
+            <input type="text" name="invoice" class="form-control" placeholder=" invoice details" value="{{ form_data.invoice.value|default_if_none:'' }}" />
+        </div>
+        <!-- DateTime Field 1 -->
+        <div class="form-group">
+            <input type="datetime-local" name="datetime_field1" class="form-control" value="{{ form_data.datetime_field1.value|default_if_none:'' }}" />
+        </div>
+        <!-- DateTime Field 2 -->
+        <div class="form-group">
+            <input type="datetime-local" name="datetime_field2" class="form-control" value="{{ form_data.datetime_field2.value|default_if_none:'' }}" />
+        </div> {% endcomment %}
+        <!-- Logo -->
+
+      
+    </div>
+
+    <input type="hidden" id="item_count" name="item_count" value="{{ item_count }}">
+
+    {% comment %} <table class="table table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>GST(%)</th>
+                <!-- <th>SGST (%)</th>
+                <th>CGST (%)</th> -->
+                <th>CESS</th>
+                <th>Amount</th>
+                <th>Total GST</th>
+                <th>bjbj</th>
+                <!-- <th>CGST Amount</th> -->
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="item-forms">
+            {% for form in item_forms %}
+            <tr class="item-form">
+                <td>{{ form.item_desc }}</td>
+                <td>{{ form.qty }}</td>
+                <td>{{ form.rate }}</td>
+                <td>{{ form.gst_rate }}</td>
+                <!-- <td>{{ form.sgst }}</td>
+                <td>{{ form.cgst }}</td> -->
+                <td>{{ form.cess }}</td>
+                <td class="item-total">0.00</td>
+                <td class="item-sgst">0.00</td>
+                <!-- <td class="item-cgst">0.00</td> -->
+                <td class="item-grand-total">0.00</td>
+                <td class="item-cgst">0.00</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> {% endcomment %}
+    <!-- <div class="container mt-5"> -->
+        <div class="table-responsive">
+            <table class="table table-bordered-custom mt-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width:60px;">Description</th>
+                        <th  style="width:60px;">Qty</th>
+                        <th  style="width:60px;">Rate</th>
+                        <th  style="width:60px;">GST(%)</th>
+                        <th  class="d-none">SGST (%)</th>
+                        <th  class="d-none">CGST (%)</th>
+                        <th  style="width:60px;">CESS</th>
+                        <th  style="width:60px;">Amount</th>
+                        <th  style="width:60px;">SGST </th>
+                        <th  style="width:60px;">CGST</th>
+                        <th  style="width:60px;">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="item-forms">
+                    {% for form in item_forms %}
+                    <tr class="item-form">
+                        <td>{{ form.item_desc }}</td>
+                        <td>{{ form.qty }}</td>
+                        <td>{{ form.rate }}</td>
+                        <td>{{ form.gst_rate }}</td>
+                        <td>{{ form.sgst }}</td>
+                        <td  class="d-none">{{ form.cgst }}</td>
+                        <td  class="d-none">{{ form.cess }}</td>
+                        <td class="item-total">0.00</td>
+                        <td class="item-sgst">0.00</td>
+                        <td class="item-cgst">0.00</td>
+                        <td class="item-grand-total">0.00</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <!-- </div> -->
+    
+   <br>
+   <br>
+    <button type="button" class="btn btn-primary btn-custom" onclick="addItemRow()">Add Item</button>
+    <button type="button" class="btn btn-secondary btn-custom" onclick="calculateTotals()">Calculate Totals</button>
+    <br><br>
+    <div id="total" class="totals"></div>
+    <div id="total_sgst" class="totals"></div>
+    <div id="total_cgst" class="totals"></div>
+    <br>
+{% comment %} 
+    <div >
+        <h5><b>Notes:</b></h5>
+        <p>It was great doing business with you.</p>
+        <h5><b>Terms and Conditions:</b></h5>
+        <p>Please make the payment by due date.</p>
+    </div> {% endcomment %}
+    
+    
+    <label for="id_notes">Notes:</label>
+    <br>
+    <textarea id="id_notes" name="notes" rows="2" cols="60">{{ form_data.notes.value }}</textarea>
+    <br>
+    
+    <label for="id_terms_conditions">Terms and Conditions:</label>
+    <br>
+    <textarea id="id_terms_conditions" name="terms_conditions" rows="2" cols="60">{{ form_data.terms_conditions.value }}</textarea>
+    
+    <br>
+    <button type="submit" class="btn btn-success">Download</button>
+    <button class="btn btn-secondary btn-custom" onclick="window.print()">Print</button>
+   
+</form>

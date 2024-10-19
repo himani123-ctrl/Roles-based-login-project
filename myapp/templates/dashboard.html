@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            background: white;
+            margin: 0;
+            background: url('{% static "images/bookwheels.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            color: #007bff;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 3px;
+            background: #007bff;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0; /* Start hidden */
+            height: 100%;
+            background: url('{% static "images/bookwheels.jpg" %}')
+            border-right: 1px solid #ddd;
+            z-index: 999;
+            transition: width 0.3s ease; /* Smooth transition */
+            overflow: hidden; /* Hide overflow */
+        }
+
+        .sidebar.show {
+            width: 200px; /* Show sidebar */
+        }
+
+        .menu-list {
+            padding: 0;
+        }
+
+        .menu-list a {
+            color: white;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+
+        .menu-list a:hover {
+            background: #007bff;
+            color: #ffffff;
+        }
+
+        .content {
+            padding: 40px 20px;
+            background: url('{% static "images/bookwheels.jpg" %}')
+            transition: margin-left 0.3s ease; /* Smooth transition for width */
+        }
+
+        .content.expanded {
+            margin-left: 200px; /* Space for the sidebar when expanded */
+        }
+
+        .content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-align: center;
+        }
+
+        .open .line1 {
+            transform: rotate(45deg) translate(7.5px, 7.5px);
+        }
+
+        .open .line2 {
+            opacity: 0;
+        }
+
+        .open .line3 {
+            transform: rotate(-45deg) translate(7.5px, -7.5px);
+        }
+    </style>
+</head>
+<body>
+    <button class="hamburger" id="sidebarToggle">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="menu-list" id="menuList">
+            <br>
+            <br><br>
+            <a class="nav-link" href="{% url 'form_view' %}">Invoice Form</a>
+            <a class="nav-link" href="{% url 'expense_report_view' %}">Expense Form</a>
+            <a class="nav-link" href="{% url 'package_report_view' %}">Package Form</a>
+        </div>
+    </div>
+
+    <div class="content" id="content">
+        <br>
+        <h1>Dashboard</h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            
+            sidebar.classList.toggle('show'); // Show or hide the sidebar
+            content.classList.toggle('expanded'); // Adjust content margin
+            this.classList.toggle('open'); // Toggle 'open' class for animation
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- 
+<div class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="invoiceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Invoice
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="invoiceDropdown">
+        <li><a class="dropdown-item" href="{% url 'form_view' %}">Invoice Form</a></li>
+        <li><a class="dropdown-item" href="{% url 'invoice_list_view' %}">Invoice List</a></li>
+    </ul>
+</div> -->
